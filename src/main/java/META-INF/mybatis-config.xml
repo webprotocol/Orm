@@ -23,6 +23,7 @@
 	</environments>
 	<mappers>
 		<mapper resource="com/hybrid/orm/mapper/CityMapper.xml"/>
+		<mapper resource="com/hybrid/orm/mapper/DeptMapper.xml"/>
 	</mappers>
 
 </configuration>

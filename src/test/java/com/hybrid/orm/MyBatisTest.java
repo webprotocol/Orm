@@ -10,7 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-import com.hybrid.orm.domain.City;
+import com.hybrid.orm.domain.Dept;
 
 public class MyBatisTest {
 	static Log log = LogFactory.getLog(MyBatisTest.class);
@@ -19,15 +19,21 @@ public class MyBatisTest {
 		
 		String resource = "META-INF/mybatis-config.xml";
 		InputStream inputStream = Resources.getResourceAsStream(resource);
-		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream, "world");
+//		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream, "world");
+//		City c = session.selectOne("com.hybrid.orm.mapper.CityMapper.findOne", 1);
+//		log.info("id = " + c.getId());
+//		log.info("name = " + c.getName());		
+		
+		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream, "employee");
 
 		SqlSession session = sqlSessionFactory.openSession();
-		
-		City c = session.selectOne("com.hybrid.orm.mapper.CityMapper.findOne", 1);
-		log.info("id = " + c.getId());
-		log.info("name = " + c.getName());
+		Dept c = session.selectOne("com.hybrid.orm.mapper.DeptMapper.findOne", 10);
+		log.info("id = " + c.getDeptno());
+		log.info("name = " + c.getDname());	
+
 		
 		session.close();
+		
 	}
 
 }
