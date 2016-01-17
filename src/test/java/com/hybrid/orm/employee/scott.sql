@@ -1,3 +1,5 @@
+
+select * from dept
 Rem Copyright (c) 1990 by Oracle Corporation
 Rem NAME
 REM    UTLSAMPL.SQL
