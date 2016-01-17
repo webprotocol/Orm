@@ -23,28 +23,34 @@ public class CityTest {
 		EntityManager em = emf.createEntityManager();
 		
 		EntityTransaction et = em.getTransaction();
-		et.begin();
-
-		City c = em.find(City.class, 10);
-		log.info("id = " + c.getId());
-		log.info("name = " + c.getName());
-		
-
-		TypedQuery<City> q = em.createNamedQuery("City.findAll", City.class);
-		List<City> list =  q.getResultList();
-		
-		list.forEach(new Consumer<City>() {
-
-			@Override
-			public void accept(City c) {
-				log.info(c.getId() + " " + c.getName());
-			}
+		try {
+			et.begin();
+	
+			City c = em.find(City.class, 10);
+			log.info("id = " + c.getId());
+			log.info("name = " + c.getName());
 			
-		});
+	
+			TypedQuery<City> q = em.createNamedQuery("City.findAll", City.class);
+			List<City> list =  q.getResultList();
+			
+			list.forEach(new Consumer<City>() {
+	
+				@Override
+				public void accept(City c) {
+					log.info(c.getId() + " " + c.getName());
+				}
+				
+			});
+			
+			et.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			et.rollback();
+		} finally {
+			em.close();
+		}
 		
-		et.commit();
-		
-		em.close();
 		emf.close();
 		
 	}

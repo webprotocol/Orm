@@ -1,4 +1,4 @@
-package com.hybrid.orm.domain;
+package com.hybrid.orm.employee;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -11,38 +11,40 @@ import javax.persistence.TypedQuery;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.dialect.Oracle10gDialect;
 
 import com.hybrid.orm.domain.City;
 import com.hybrid.orm.domain.Country;
+import com.hybrid.orm.domain.Dept;
 
-public class CountryTest {
-	static Log log = LogFactory.getLog(CountryTest.class);
+public class DeptTest {
+	static Log log = LogFactory.getLog(DeptTest.class);
 
 	public static void main(String[] args) {
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("world");
+		
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("employee");
 		EntityManager em = emf.createEntityManager();
 		
 		EntityTransaction et = em.getTransaction();
-		
 		try {
 			et.begin();
 	
-			Country c = em.find(Country.class, "KOR");
-			log.info("id = " + c.getCode());
-			log.info("name = " + c.getName());
+			Dept d = em.find(Dept.class, 10L);
+			log.info("deptno = " + d.getDeptno());
+			log.info("name = " + d.getDname());
 			
 	
-			TypedQuery<Country> q = em.createNamedQuery("Country.findAll", Country.class);
-			List<Country> list =  q.getResultList();
+			TypedQuery<Dept> q = em.createNamedQuery("Dept.findAll", Dept.class);
+			List<Dept> list =  q.getResultList();
 			
-	//		list.forEach(new Consumer<Country>() {
-	//
-	//			@Override
-	//			public void accept(Country c) {
-	//				log.info(c.getCode() + " " + c.getName());
-	//			}
-	//			
-	//		});
+			list.forEach(new Consumer<Dept>() {
+	
+				@Override
+				public void accept(Dept d) {
+					log.info(d.getDeptno() + " " + d.getDname());
+				}
+				
+			});
 			
 			et.commit();
 		} catch (Exception e) {
@@ -51,7 +53,6 @@ public class CountryTest {
 		} finally {
 			em.close();
 		}
-		
 		
 		emf.close();
 		
